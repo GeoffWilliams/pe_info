@@ -119,6 +119,6 @@ describe PeInfo::Tarball do
 
   it "does not use --wildcards on non-GNU tar" do
     ENV['PATH'] = File.join('spec','fixtures','fake_bin', 'nongnu')
-    expect(PeInfo::Tarball::tar).not_to match(/wildcards/)
+    expect(PeInfo::Tarball::tar).not_to match(/wildcards /)
   end
 end
