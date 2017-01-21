@@ -46,7 +46,7 @@ module PeInfo
     end
 
     def self.agent_version(tarball)
-      agent_package = %x(#{tar} ztf #{tarball} '**/puppet-agent*')
+      agent_package = %x(#{tar} -ztf #{tarball} '*/puppet-agent*')
       matches = agent_package.match(/puppet-agent-(\d+\.\d+\.\d+)/)
       agent_version = matches ? matches.captures.first : false
 
