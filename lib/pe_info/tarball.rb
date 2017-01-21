@@ -21,7 +21,7 @@ module PeInfo
       begin
         tar_version = %x(tar --version)
         if tar_version =~ /GNU/
-          tar = 'tar --wildcards'
+          tar = 'tar --wildcards '
         else
           tar = 'tar'
         end
