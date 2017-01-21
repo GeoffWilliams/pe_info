@@ -1,9 +1,12 @@
 [![Build Status](https://travis-ci.org/GeoffWilliams/pe_info.svg?branch=master)](https://travis-ci.org/GeoffWilliams/pe_info)
 # PeInfo
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pe_info`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a simple library for figuring out things we need to know about Puppet
+Enterprise, such as where to upload agent installers and what the agent version
+number is.
 
-TODO: Delete this and the text above, and describe your gem
+This is done by either munging supplied version arguments or in the case of
+agent versions, looking inside of an installation media tarball.
 
 ## Installation
 
@@ -23,7 +26,42 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Uploading agent installers
+
+Lets say you have an agent installer tarball you previously downloaded:
+```
+...
+38M /Users/geoff/agent_installers/2016.5.1/puppet-agent-sles-10-x86_64.tar.gz
+25M /Users/geoff/agent_installers/2016.5.1/puppet-agent-sles-11-i386.tar.gz
+33M /Users/geoff/agent_installers/2016.5.1/puppet-agent-sles-11-s390x.tar.gz
+...
+```
+
+And you would like to know where it should be uploaded on a server you just
+installed with PE 2016.5.1 from `/Users/geoff/Downloads/puppet-enterprise-2016.5.1-el-7-x86_64.tar.gz`:
+
+```ruby
+require 'pe_info'
+tarball = '/Users/geoff/Downloads/puppet-enterprise-2016.5.1-el-7-x86_64.tar.gz'
+pe_version, agent_version = PeInfo::Tarball::inspect(tarball)
+if pe_version and agent_version
+  upload_path = PeInfo::System::agent_installer_upload_path(
+    pe_version,
+    agent_version,
+    repo_file
+  )
+
+  if upload_path
+    # do something with upload_path
+  else
+    # unparsable agent_version
+  end
+else
+  # install tarball missing or invalid
+end
+```
+
+Now you know that the agent installers tarball belongs at `upload_path`.  If you upload the file to this location on a PE master, it will remove the need to head out to the internet and download the file manually.
 
 ## Development
 
