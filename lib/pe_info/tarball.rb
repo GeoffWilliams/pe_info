@@ -17,6 +17,21 @@ require "pe_info/version"
 
 module PeInfo
   module Tarball
+    def self.tar
+      begin
+        tar_version = %x(tar --version)
+        if tar_version =~ /GNU/
+          tar = 'tar --wildcards'
+        else
+          tar = 'tar'
+        end
+      rescue Errno::ENOENT
+        raise "please install tar and make sure its in your PATH"
+      end
+
+      tar
+    end
+
     def self.is_pe_tarball(tarball)
       # =~ returns nil if no matches or position of first match so we must
       # convert its result to a boolean for easy use
@@ -31,7 +46,7 @@ module PeInfo
     end
 
     def self.agent_version(tarball)
-      agent_package = %x(tar ztf #{tarball} '**/puppet-agent*')
+      agent_package = %x(#{tar} ztf #{tarball} '**/puppet-agent*')
       matches = agent_package.match(/puppet-agent-(\d+\.\d+\.\d+)/)
       agent_version = matches ? matches.captures.first : false
 

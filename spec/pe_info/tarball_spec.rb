@@ -24,6 +24,11 @@ describe PeInfo::Tarball do
   MISSING_AGENT               = File.join(MOCK_TARBALL_DIR, 'missing_agent.tar.gz')
   CHANGED_VERSION_CONVENTION  = File.join(MOCK_TARBALL_DIR, 'changed_version_convention.tar.gz')
   MISSING_FILE                = File.join(MOCK_TARBALL_DIR, 'missing_file.tar.gz')
+  PATH_ORIG                   = ENV['PATH']
+
+  after do
+    ENV['PATH'] = PATH_ORIG
+  end
 
 
   it "correctly identifies PE tarballs" do
@@ -99,4 +104,21 @@ describe PeInfo::Tarball do
     expect(agent_version).to be false
   end
 
+  it "raises exception when tar is not found" do
+    ENV['PATH'] = '/'
+
+    # dont forget curly braces for expect - has to be lambda or the exception
+    # 'escapes'!
+    expect{PeInfo::Tarball::tar}.to raise_error(/install tar/)
+  end
+
+  it "uses --wildcards on gnu tar" do
+    ENV['PATH'] = File.join('spec','fixtures','fake_bin', 'gnu')
+    expect(PeInfo::Tarball::tar).to match(/wildcards/)
+  end
+
+  it "does not use --wildcards on non-GNU tar" do
+    ENV['PATH'] = File.join('spec','fixtures','fake_bin', 'nongnu')
+    expect(PeInfo::Tarball::tar).not_to match(/wildcards/)
+  end
 end

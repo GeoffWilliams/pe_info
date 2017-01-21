@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+# A fake GNU tar
+echo "tar (GNU tar) 1.26"

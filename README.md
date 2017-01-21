@@ -73,6 +73,13 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/GeoffWilliams/pe_info.
 
+Please ensure tests are passing before and after any contributions and please update tests as required for new functionality and bugfixes:
+
+```
+bundle install
+bundle exec rake spec
+```
+
 ### Creating mock PE tarballs
 To create a PE tarball identical to a release but with every file truncated to zero bytes:
 
