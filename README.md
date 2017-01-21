@@ -87,3 +87,7 @@ tar zcvf MOCK_PE_UPSTREAM_TARBALL puppet-enterprise-*
 ```
 
 Once created, the tarball can be moved to spec/fixtures/tarballs and the tmp directory can be removed
+
+## Support
+* This is experimental software, use at own risk!
+* This software is not supported by Puppet, Inc.
