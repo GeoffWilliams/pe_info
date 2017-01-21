@@ -32,5 +32,19 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pe_info.
+Bug reports and pull requests are welcome on GitHub at https://github.com/GeoffWilliams/pe_info.
 
+### Creating mock PE tarballs
+To create a PE tarball identical to a release but with every file truncated to zero bytes:
+
+```shell
+mkdir tmp
+cd tmp
+tar zxvf PE_UPSTREAM_TARBALL
+cd puppet-enterprise-*
+find . -type f -exec truncate -s 0 {} \;
+cd ..
+tar zcvf MOCK_PE_UPSTREAM_TARBALL puppet-enterprise-*
+```
+
+Once created, the tarball can be moved to spec/fixtures/tarballs and the tmp directory can be removed

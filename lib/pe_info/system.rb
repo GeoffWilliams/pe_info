@@ -31,7 +31,7 @@ module PeInfo
       "/#{AGENT_UPLOAD_PATH_WINDOWS}/#{pe_version}/windows-x86_64-#{agent_version}"
     end
 
-    def self.upload_path(pe_version, agent_version, installer)
+    def self.agent_installer_upload_path(pe_version, agent_version, installer)
       if installer =~ /puppet-agent-x64.msi/
         path = agent_installer_upload_path_windows_x64(pe_version, agent_version)
       elsif installer =~ /puppet-agent-x86.msi/
