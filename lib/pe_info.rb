@@ -13,6 +13,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+require 'logger'
+
 module PeInfo
+
+  # lazy-init logger to be a regular ruby logger instance.  If you want
+  # something else, call logger= before doing things that generate logging
+  # ...based on http://stackoverflow.com/a/6768164
+  def self.logger
+    @logger ||= Logger.new(STDOUT)
+  end
+
+  def self.logger=(logger)
+    @logger = logger
+  end
 
 end

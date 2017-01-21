@@ -69,7 +69,7 @@ describe PeInfo::System do
   AGENT_REPO_FILES_WINDOWS_X86 = "puppet-agent-x86.msi"
 
   it "agent_installer_upload_path generates correct installer upload path" do
-    AGENT_REPO_FILES_WINDOWS.each { |installer|
+    AGENT_REPO_FILES_NORMAL.each { |installer|
       upload_path = PeInfo::System::agent_installer_upload_path(
         PE_VERSION,
         AGENT_VERSION,

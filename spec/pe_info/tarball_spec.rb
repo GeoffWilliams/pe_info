@@ -61,7 +61,7 @@ describe PeInfo::Tarball do
 
   it "fails gracefully with unparseble version number" do
     expect(PeInfo::Tarball.pe_version("puppet-enterprise-2020unlimited-el8-x86_64.tar.gz")).to be false
-    expect(PeInfo::Tarball.pe_version("puppet-enterprise-4000.5-el-7-x86_64.tar.gz")).to be falses
+    expect(PeInfo::Tarball.pe_version("puppet-enterprise-4000.5-el-7-x86_64.tar.gz")).to be false
   end
 
   it "parses correct agent version from tarball" do
