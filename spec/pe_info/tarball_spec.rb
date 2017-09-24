@@ -21,6 +21,7 @@ describe PeInfo::Tarball do
   MOCK_TARBALL_DIR            = File.join('spec', 'fixtures', 'tarballs')
   PE_2016_4_2_TARBALL         = File.join(MOCK_TARBALL_DIR, 'puppet-enterprise-2016.4.2-el-7-x86_64.tar.gz')
   PE_2016_5_1_TARBALL         = File.join(MOCK_TARBALL_DIR, 'puppet-enterprise-2016.5.1-el-7-x86_64.tar.gz')
+  PE_2017_2_4_TARBALL         = File.join(MOCK_TARBALL_DIR, 'puppet-enterprise-2017.2.4-el-7-x86_64.tar.gz')
   MISSING_AGENT               = File.join(MOCK_TARBALL_DIR, 'missing_agent.tar.gz')
   CHANGED_VERSION_CONVENTION  = File.join(MOCK_TARBALL_DIR, 'changed_version_convention.tar.gz')
   MISSING_FILE                = File.join(MOCK_TARBALL_DIR, 'missing_file.tar.gz')
@@ -33,15 +34,9 @@ describe PeInfo::Tarball do
 
   it "correctly identifies PE tarballs" do
     [
-      "/Users/geoff/Downloads/puppet-enterprise-2015.3.2-el-7-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.1.2-ubuntu-14.04-amd64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.2.0-el-7-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.2.1-el-7-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.4.0-el-6-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.4.0-el-7-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.4.2-el-7-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.5.1-el-7-x86_64.tar.gz",
-      "/Users/geoff/Downloads/puppet-enterprise-2020.5.1-el-8-x86_64.tar.gz",
+      "./spec/fixtures/tarballs/puppet-enterprise-2016.4.2-el-7-x86_64.tar.gz",
+      "./spec/fixtures/tarballs/puppet-enterprise-2016.5.1-el-7-x86_64.tar.gz",
+      "./spec/fixtures/tarballs/puppet-enterprise-2017.2.4-el-7-x86_64.tar.gz",
     ].each { |tarball|
       expect(PeInfo::Tarball.is_pe_tarball(tarball)).to be true
     }
@@ -49,9 +44,8 @@ describe PeInfo::Tarball do
 
   it "rejects miss-named PE tarballs" do
     [
-      "/Users/geoff/Downloads/puppet-enterprise-2015.3.2-el-7-x86_64.tar",
-      "/Users/geoff/Downloads/puppet-enterprise-2016.1.2-ubuntu-14.04-amd64.zip",
-      "/Users/geoff/Downloads/puppet-agent-1.8.2-1.el7.x86_64.rpm ",
+      "./spec/fixtures/tarballs/changed_version_convention.tar.gz",
+      "./spec/fixtures/tarballs/missing_agent.tar.gz",
     ].each { |tarball|
       expect(PeInfo::Tarball.is_pe_tarball(tarball)).to be false
     }
@@ -88,6 +82,10 @@ describe PeInfo::Tarball do
     pe_version, agent_version = PeInfo::Tarball.inspect(PE_2016_5_1_TARBALL)
     expect(pe_version).to eq "2016.5.1"
     expect(agent_version).to eq "1.8.2"
+
+    pe_version, agent_version = PeInfo::Tarball.inspect(PE_2017_2_4_TARBALL)
+    expect(pe_version).to eq "2017.2.4"
+    expect(agent_version).to eq "1.10.8"
   end
 
   it "inspect call fails gracefully when tarball is bad" do
