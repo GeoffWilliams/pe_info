@@ -6,13 +6,13 @@ require 'pe_info/version'
 Gem::Specification.new do |spec|
   spec.name          = "pe_info"
   spec.version       = PeInfo::VERSION
-  spec.authors       = ["Geoff Williams"]
-  spec.email         = ["geoff.williams@puppet.com"]
+  spec.authors       = ["Declarative Systems"]
+  spec.email         = ["sales@declarativesystems.com"]
 
   spec.summary       = %q{Get info about a PE installation tarball}
   spec.description   = %q{Peek inside a Puppet Enterprise tarball to lookup versions and capabilities}
-  spec.homepage      = "https://github.com/GeoffWilliams/pe_info"
-  spec.license       = "Apache 2.0"
+  spec.homepage      = "https://github.com/declarativesystems/pe_info"
+  spec.license       = "Apache-2.0"
 
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
