@@ -61,7 +61,9 @@ module PeInfo
           # windows doesn't use the platform tag...
           manifests = Dir.glob("*.pp").reject {|e| e =~ /windows/ }
           manifests.each { |f|
-            pe_repo_match = File.open(f).grep(/^\s+pe_repo::/)
+            pe_repo_match = File.open(f).grep(/^\s+pe_repo::/).reject { |e|
+              e =~ /deprecation/
+            }
             if pe_repo_match.length > 0
               # need to read the call the manifest would have made to get the
               # platform tag, eg ubuntu-1604-i386 is really ubuntu-16.04-i386...
